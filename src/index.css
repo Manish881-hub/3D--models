@@ -1,17 +1,1499 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ============================================
+   NRG Bridge Power Solution - Global Styles
+   Adapted from nrgcdn.b-cdn.net/dist/style.min.css
+   ============================================ */
+
+/* Font imports - Using Inter as Riegla alternative */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;700&display=swap');
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  --color-dark: #261d26;
+  --color-off-white: #f6f7f3;
+  --color-green: #6fe45d;
+  --color-yellow: #ffc20e;
+  --color-dark-green: #003911;
+  --color-white: #fff;
+  --color-black: #000;
+
+  --font-primary: 'Inter', sans-serif;
+  --font-weight-light: 200;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-smooth: cubic-bezier(0.55, 0.1, 0.26, 0.995);
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ============================================
+   Reset & Base Styles
+   ============================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 html {
   scroll-behavior: auto;
+  background-color: var(--color-off-white);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overscroll-behavior: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  margin: 0;
-  padding: 0;
+  font-family: var(--font-primary);
+  color: var(--color-white);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
   overflow-x: hidden;
+  min-height: 100%;
+  height: auto;
+  overscroll-behavior: none;
 }
 
-* {
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img, picture {
+  pointer-events: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+.phaseTitle {
+  font-size: clamp(3rem, 8.5vw, 12rem);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+}
+
+.phaseTitle .line {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.phaseTitle .inner {
+  position: relative;
+  display: block;
+}
+
+/* Phase title gradient text animation */
+.phaseTitle .line .inner {
+  background: linear-gradient(90deg, var(--color-dark) 45%, var(--color-yellow) 46%, var(--color-yellow) 54%, rgba(38, 29, 38, 0.2) 55%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-position: 100% 50%;
+}
+
+.phaseTitle--light .line .inner {
+  background: linear-gradient(90deg, var(--color-white) 45%, var(--color-yellow) 46%, var(--color-yellow) 54%, rgba(255, 255, 255, 0.2) 55%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-position: 100% 50%;
+}
+
+/* Animation states */
+.phaseTitle.anim .inner {
+  transform: translateY(1.1em);
+}
+
+.phaseTitle.in .inner {
+  transform: translateY(0);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.phaseTitle.in .line .inner,
+.phaseTitle.out .line .inner {
+  background-position: 0 50%;
+  transition: background-position 1.2s var(--ease-smooth), transform 0.8s var(--ease-out);
+}
+
+.phaseTitle.in .line:nth-child(2) .inner { transition-delay: 0.2s; }
+.phaseTitle.in .line:nth-child(3) .inner { transition-delay: 0.35s; }
+.phaseTitle.in .line:nth-child(4) .inner { transition-delay: 0.5s; }
+
+.phaseTitle.out .inner {
+  transform: translateY(-1.1em);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.phaseTitle.settled .line .inner {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: var(--color-dark);
+  color: var(--color-dark);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.phaseTitle--light.settled .line .inner {
+  -webkit-text-fill-color: var(--color-white);
+  color: var(--color-white);
+}
+
+.midHeading {
+  font-size: clamp(2.5rem, 4.2vw, 6rem);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.01em;
+}
+
+.paragraph {
+  font-size: clamp(0.875rem, 1vw, 1.4rem);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.3;
+}
+
+.paragraph--mid {
+  font-size: clamp(1.5rem, 2.3vw, 3.3rem);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+.paragraph--large {
+  font-size: clamp(1.5rem, 2.8vw, 4rem);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+/* ============================================
+   Badge
+   ============================================ */
+.badge {
+  color: var(--color-off-white);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  border: 1px solid var(--color-off-white);
+  border-radius: 0.8rem;
+  display: inline-block;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.phButton {
+  user-select: none;
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  padding: 1rem 2rem;
+  background: var(--color-white);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.1s linear;
+  font-family: var(--font-primary);
+}
+
+.phButton:hover {
+  background-color: #eee;
+}
+
+.phButton:active {
+  background-color: #ddd;
+}
+
+.phButton:focus-visible {
+  outline: 4px solid var(--color-yellow);
+}
+
+/* Hold Button */
+.holdButton {
+  display: inline-block;
+  user-select: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  position: relative;
+  transition: border 0.2s;
+  font-family: var(--font-primary);
+}
+
+.holdButton:hover {
+  border: 2px solid var(--color-white);
+}
+
+/* Scroll Button */
+.scrollButton {
+  height: 4rem;
+  width: 20rem;
+  display: inline-block;
+  border-radius: 2rem;
+  background-color: var(--color-white);
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.scrollButton__label {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate3d(-50%, -50%, 0);
+  font-size: 1rem;
+  color: var(--color-dark);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.scrollButton__icon {
+  position: absolute;
+  height: 1.8rem;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scrollButton__progress {
+  position: absolute;
+  left: 0.2rem;
+  top: 0.2rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 1.8rem;
+  background-color: var(--color-green);
+  transition: width 0.3s var(--ease-smooth);
+}
+
+.scrollButton.triggered .scrollButton__progress {
+  width: calc(100% - 0.4rem) !important;
+}
+
+/* Arrow Button */
+.arrowButton {
+  position: relative;
+  padding-right: 3.5rem;
+  display: inline-block;
+  background: rgba(38, 29, 38, 0.1);
+  padding: 1rem 3.5rem 1rem 1.2rem;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.arrowButton .button__inner {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.arrowButton::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 0.35rem;
+  background: var(--color-green);
+  transition: background-position 0.3s var(--ease-smooth);
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.nav {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem 3.5rem;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s 0.8s linear;
+}
+
+.nav__logo {
+  height: 2.5rem;
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+
+.nav__logo svg {
+  height: 100%;
+}
+
+.nav__logo .flip {
+  fill: var(--color-white);
+  transition: fill 0.2s;
+}
+
+.nav__right {
+  display: flex;
+  column-gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.nav__menu {
+  pointer-events: auto;
+  height: 3rem;
+  font-size: 1rem;
+  color: var(--color-dark-green);
+  font-weight: var(--font-weight-bold);
+  position: relative;
+}
+
+.nav__menuBG {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  height: 3rem;
+  width: 8rem;
+  background-color: var(--color-white);
+  border-radius: 1.5rem;
+  transition: width 0.2s 0.1s var(--ease-smooth),
+              height 0.2s 0.1s var(--ease-smooth),
+              border-radius 0.1s 0.1s var(--ease-smooth),
+              background 0.2s 0.2s linear;
+}
+
+.nav__menuLabel {
+  position: relative;
+  height: 3rem;
+  padding: 0 3.5rem 0 0.8rem;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s 0.1s linear;
+}
+
+.nav__menuIcon {
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  right: -0.3rem;
+  width: 4rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.2rem;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-smooth);
+}
+
+.nav__menuIcon span {
+  width: 0.7rem;
+  display: inline-block;
+  height: 1px;
+  background: #001d09;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s var(--ease-smooth), background 0.3s ease-in-out;
+}
+
+.nav__menuIcon::before {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  right: 1.1rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
+  transition: background 0.3s ease-in-out;
+}
+
+.nav__menuIcon:hover {
+  transform: scale(1.25);
+}
+
+.nav__menuIcon:hover::before {
+  background-color: var(--color-dark-green);
+}
+
+.nav__menuIcon:hover span {
+  background: var(--color-green);
+}
+
+/* Phase indicator circle */
+.nav__phaseCircle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  background-color: var(--color-green);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #001d09;
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-bold);
+  transition: color 0.2s linear;
+}
+
+.nav__phaseCircle.show {
+  display: flex;
+}
+
+/* Menu dropdown */
+.nav__menuContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  min-width: 24rem;
+  counter-reset: menu-links;
+  padding: 0 1.2rem;
+  user-select: none;
+  transition: opacity 150ms ease-in-out;
+}
+
+.nav__menuLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__menuLink {
+  white-space: nowrap;
+  height: 4rem;
+  counter-increment: menu-links;
+  display: flex;
+  align-items: center;
+  column-gap: 0.7rem;
+  border-bottom: 1px dashed rgba(68, 57, 68, 0.3);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(2rem);
+  transition: opacity 1ms 0.2s linear, transform 1ms 0.2s linear;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-dark);
+}
+
+.nav__menuLink a {
+  position: relative;
+  display: block;
+  opacity: 0.5;
+  transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s var(--ease-smooth);
+}
+
+.nav__menuLink:last-child {
+  border-bottom: none;
+}
+
+.nav__menuLink::before {
+  content: counter(menu-links);
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  border-radius: 100%;
+  background-color: rgba(68, 57, 68, 0.1);
+  align-items: center;
+  justify-content: center;
+  color: #001d09;
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-bold);
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease-in-out, transform 0.2s var(--ease-smooth);
+}
+
+.nav__menuLink.active::before {
+  background-color: var(--color-green);
+}
+
+.nav__menuLink:hover a {
+  transform: translateX(0.7rem);
+  opacity: 1;
+}
+
+.nav__menuLink:hover::before {
+  transform: translateX(0.7rem);
+  opacity: 1;
+}
+
+/* Menu contact button */
+.nav__menuContact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -1.2rem;
+  width: calc(100% + 2.4rem);
+  height: 5rem;
+  border-top: 1px solid #f0f0f0;
+  opacity: 0;
+  transition: opacity 1ms 0.2s linear;
+}
+
+.nav__menuContactButton {
+  width: 20rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  background-color: var(--color-green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.7rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  font-family: var(--font-primary);
+}
+
+.nav__menuContactButton span:nth-child(1) {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-dark-green);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav__menuContactButton span:nth-child(2) {
+  color: var(--color-dark-green);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  transition: color 0.2s ease-in-out;
+}
+
+.nav__menuContactButton:hover {
+  background-color: var(--color-dark-green);
+}
+
+.nav__menuContactButton:hover span:nth-child(1) {
+  background-color: var(--color-green);
+}
+
+.nav__menuContactButton:hover span:nth-child(2) {
+  color: var(--color-green);
+}
+
+/* Menu open state */
+.menu-open .nav__menuBG {
+  border-radius: 1.3rem;
+  transition: width 0.4s var(--ease-out), height 0.4s var(--ease-out), border-radius 0.1s 0.1s var(--ease-smooth), background-color 0.2s linear;
+}
+
+.menu-open .nav__menuLabel {
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.menu-open .nav__menuContent {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.menu-open .nav__menuLink {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease-in-out, transform 0.5s var(--ease-out);
+}
+
+.menu-open .nav__menuLink:nth-child(1) { transition-delay: 150ms; }
+.menu-open .nav__menuLink:nth-child(2) { transition-delay: 200ms; }
+.menu-open .nav__menuLink:nth-child(3) { transition-delay: 250ms; }
+.menu-open .nav__menuLink:nth-child(4) { transition-delay: 300ms; }
+.menu-open .nav__menuLink:nth-child(5) { transition-delay: 350ms; }
+.menu-open .nav__menuLink:nth-child(6) { transition-delay: 400ms; }
+
+.menu-open .nav__menuContact {
+  opacity: 1;
+  transition: opacity 0.5s 0.4s ease-in-out;
+}
+
+.menu-open .nav__menuIcon span:nth-child(1) {
+  transform: translateY(0.15rem) rotate(45deg);
+}
+
+.menu-open .nav__menuIcon span:nth-child(2) {
+  transform: translateY(-0.15rem) rotate(-45deg);
+}
+
+/* Dark nav variant */
+html.flip .nav__logo .flip {
+  fill: var(--color-black);
+}
+
+.menu-dark .nav__logo .flip {
+  fill: var(--color-white);
+}
+
+/* CTA nav variant */
+.nav-cta:not(.menu-open) .nav .nav__menuBG {
+  background-color: var(--color-green);
+}
+
+/* ============================================
+   Loading Screen
+   ============================================ */
+.loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  background-color: var(--color-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s linear;
+}
+
+.loadingScreen.loaded {
+  pointer-events: none;
+}
+
+.loadingScreen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loadingScreen__logo {
+  margin-bottom: 3rem;
+}
+
+.loadingScreen__logo svg {
+  height: 3rem;
+}
+
+.loadingScreen__progress {
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  margin-bottom: 2rem;
+}
+
+.loadingScreen__enter {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: var(--color-green);
+  color: var(--color-dark-green);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  border-radius: 2rem;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-primary);
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.5s ease-in-out, transform 0.5s var(--ease-out), background-color 0.2s ease-in-out;
+}
+
+.loadingScreen__enter.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loadingScreen__enter:hover {
+  background-color: #5cd34b;
+}
+
+.loadingScreen__footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loadingScreen__footerLinks {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.loadingScreen__footerLink {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s;
+}
+
+.loadingScreen__footerLink:hover {
+  color: var(--color-white);
+}
+
+.loadingScreen__footerCopy {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   Start Screen (Hero)
+   ============================================ */
+.startScreen {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  color: var(--color-dark);
+  background: var(--color-off-white);
+  min-height: 100vh;
+}
+
+.startScreen__hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 3.5rem 4rem;
+}
+
+.startScreen__title {
+  margin-bottom: 2rem;
+}
+
+.startScreen__paragraph {
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  line-height: 1.2;
+  max-width: 36rem;
+}
+
+.startScreen__scrollMessage {
+  margin-top: 2rem;
+}
+
+.startScreen__videoWrap {
+  position: relative;
+  height: 200vh;
+}
+
+.startScreen__video {
+  position: sticky;
+  top: 2.5rem;
+  left: 2.5rem;
+  width: calc(100vw - 5rem);
+  height: calc(100vh - 2.5rem);
+  border-radius: 1.2rem 1.2rem 0 0;
+  background: #888;
+  overflow: hidden;
+}
+
+.startScreen__video video,
+.startScreen__video canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.startScreen__video::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(38, 29, 38, 0.75);
+  pointer-events: none;
+}
+
+.startScreen__lowerContent {
+  position: relative;
+  z-index: 2;
+  color: var(--color-off-white);
+  padding: 4rem 3.5rem;
+}
+
+.startScreen__intro {
+  font-size: clamp(2rem, 3.2vw, 4.6rem);
+  letter-spacing: -0.01em;
+  font-weight: var(--font-weight-medium);
+  max-width: 56rem;
+}
+
+.startScreen__intro .line {
+  display: block;
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-position: 100% 50%;
+  background-image: linear-gradient(90deg, var(--color-white) 45%, var(--color-yellow) 46%, var(--color-yellow) 54%, rgba(255, 255, 255, 0.3) 55%);
+  padding: 0.2rem 0;
+  line-height: 1;
+}
+
+.startScreen__intro.show .line {
+  background-position: 0 50%;
+  transition: background-position 1.5s var(--ease-out);
+}
+
+.startScreen__intro.show .line:nth-child(1) { transition-delay: 150ms; }
+.startScreen__intro.show .line:nth-child(2) { transition-delay: 300ms; }
+.startScreen__intro.show .line:nth-child(3) { transition-delay: 450ms; }
+.startScreen__intro.show .line:nth-child(4) { transition-delay: 600ms; }
+
+/* ============================================
+   Experience (Phase) Screens
+   ============================================ */
+.experience_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.experience {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.experience > * {
+  pointer-events: none;
+}
+
+.experience > .anim-entered {
+  pointer-events: auto;
+}
+
+/* Explore Screen */
+.exploreScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.exploreScreen__static {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.exploreScreen__static > * {
+  pointer-events: auto;
+}
+
+.exploreScreen__summary {
+  position: fixed;
+  bottom: 6rem;
+  left: 3.5rem;
+  z-index: 7;
+  max-width: 30rem;
+}
+
+.exploreScreen__stepHeading {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.exploreScreen__summaryParagraph {
+  font-size: 1rem;
+  color: var(--color-dark);
+  line-height: 1.4;
+}
+
+.exploreScreen__scrollMessage {
+  position: fixed;
+  bottom: 3rem;
+  left: 3.5rem;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.exploreScreen__scrollMessage span {
+  font-size: 0.8rem;
+  color: var(--color-dark);
+}
+
+/* Intro Screen */
+.introScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.introScreen__cover {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 3.5rem;
+  gap: 1.5rem;
+}
+
+.introScreen__explain {
+  padding: 3rem 3.5rem;
+}
+
+/* Nodes */
+.exploreScreen__node {
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.exploreScreen__nodeTitle {
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
+.exploreScreen__nodePanel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.3s ease-in-out, transform 0.3s var(--ease-out);
+  pointer-events: none;
+  min-width: 20rem;
+}
+
+.exploreScreen__node.active .exploreScreen__nodePanel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.exploreScreen__nodePanel__content {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Scroll Progress Dots
+   ============================================ */
+.progress {
+  position: fixed;
+  z-index: 10;
+  right: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+.progress__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 0.4rem;
+  background-color: var(--color-white);
+  transition: opacity 0.3s linear, background-color 0.3s linear, height 0.5s var(--ease-smooth);
+  will-change: height, color;
+}
+
+.progress__dot.active {
+  height: 2rem;
+  background-color: var(--color-green);
+}
+
+/* ============================================
+   Deep Dive Overlay
+   ============================================ */
+.deepDive {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.deepDive.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.deepDive__inner {
+  min-height: 100%;
+  padding: 4rem 3.5rem;
+}
+
+.deepDive__main {
+  position: relative;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.deepDive__color {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.deepDive__close {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deepDive__close::before,
+.deepDive__close::after {
+  content: "";
+  position: absolute;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--color-white);
+}
+
+.deepDive__close::before {
+  transform: rotate(45deg);
+}
+
+.deepDive__close::after {
+  transform: rotate(-45deg);
+}
+
+.deepDive__title {
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 2rem;
+  color: var(--color-white);
+}
+
+.deepDive__intro {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-white);
+  margin-bottom: 3rem;
+  max-width: 45rem;
+}
+
+/* ============================================
+   Accordion
+   ============================================ */
+.accordion {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.accordion__heading {
+  padding: 1.5rem 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.accordion__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--color-white);
+  top: 50%;
+  left: 50%;
+}
+
+.accordion__icon::before {
+  width: 100%;
+  height: 2px;
+  transform: translate(-50%, -50%);
+}
+
+.accordion__icon::after {
+  width: 2px;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.accordion--expanded .accordion__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.accordion__content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s var(--ease-out);
+}
+
+.accordion--expanded .accordion__content {
+  height: auto;
+}
+
+.accordion__inner {
+  padding-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   Media Container
+   ============================================ */
+.media {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.media.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.media.fadeOut {
+  opacity: 0;
+}
+
+.media video,
+.media img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.media img {
+  display: none;
+}
+
+.media img.active {
+  display: block;
+}
+
+/* ============================================
+   Scroll Message
+   ============================================ */
+.scrollMessage {
+  display: flex;
+  align-items: center;
+}
+
+.scrollMessage span {
+  font-size: 0.8rem;
+  color: var(--color-dark);
+  margin-left: 0.5rem;
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+.anim.fade {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.anim.fade.in {
+  opacity: 1;
+}
+
+.anim.fadeUp {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.5s ease-in-out, transform 0.8s var(--ease-out);
+}
+
+.anim.fadeUp.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.anim-delay-1.in { transition-delay: 0.1s; }
+.anim-delay-2.in { transition-delay: 0.2s; }
+.anim-delay-3.in { transition-delay: 0.3s; }
+.anim-delay-4.in { transition-delay: 0.4s; }
+.anim-delay-5.in { transition-delay: 0.5s; }
+
+/* ============================================
+   Tooltip
+   ============================================ */
+.tooltip {
+  position: absolute;
+  transform: translate3d(-50%, 1rem, 0);
+  width: 18rem;
+  background-color: var(--color-dark);
+  text-align: center;
+  padding: 0.7rem 0.8rem 0.9rem;
+  border-radius: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s linear, transform 0.3s ease-in;
+  pointer-events: none;
+}
+
+.tooltip p {
+  font-size: 0.9rem;
+  line-height: 1.15;
+  color: var(--color-white);
+}
+
+.tooltip::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background: var(--color-dark);
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform-origin: top left;
+  transform: rotate(45deg);
+}
+
+/* ============================================
+   Power Switch
+   ============================================ */
+.powerSwitch {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.7rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.powerSwitch > span {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.powerSwitch__control {
+  height: 1.8rem;
+  width: 3.5rem;
+  border-radius: 0.9rem;
+  box-sizing: content-box;
+  position: relative;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: background 250ms linear, border 250ms linear;
+}
+
+.powerSwitch__slider {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.7rem;
+  background: var(--color-white);
+  transition: transform 0.2s var(--ease-smooth);
+}
+
+.powerSwitch.active .powerSwitch__control {
+  background-color: var(--color-yellow);
+  border: 1px solid var(--color-yellow);
+}
+
+.powerSwitch.active .powerSwitch__slider {
+  transform: translateX(1.7rem);
+}
+
+/* ============================================
+   Icon
+   ============================================ */
+.icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.7rem;
+  display: inline-block;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .nav {
+    padding: 3vh 1.5rem;
+  }
+
+  .nav__logo {
+    height: 2.4rem;
+  }
+
+  .startScreen__hero {
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  .startScreen__video {
+    left: 1rem;
+    width: calc(100vw - 2rem);
+    top: 1rem;
+    height: calc(100vh - 1rem);
+  }
+
+  .startScreen__lowerContent {
+    padding: 3rem 1.5rem;
+  }
+
+  .exploreScreen__summary {
+    left: 1.5rem;
+    bottom: 4rem;
+  }
+
+  .exploreScreen__scrollMessage {
+    left: 1.5rem;
+    bottom: 2rem;
+  }
+
+  .progress {
+    right: 1.5rem;
+  }
+
+  .phaseTitle {
+    font-size: 3rem;
+  }
+
+  .paragraph--large {
+    font-size: 1.5rem;
+  }
+
+  .scrollButton {
+    width: 16rem;
+    height: 3.5rem;
+  }
+
+  .scrollButton__label {
+    font-size: 0.85rem;
+  }
+
+  .scrollButton__progress {
+    height: 3.1rem;
+  }
+
+  .scrollButton__icon {
+    height: 1.3rem;
+    left: 1.2rem;
+  }
+
+  .deepDive__inner {
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* ============================================
+   Transition Helpers
+   ============================================ */
+.fade-out body {
+  opacity: 0;
+}
+
+body {
+  transition: opacity 0.2s linear;
+}
+
+/* Smooth state transitions */
+.exploring .progress {
+  opacity: 1;
+}
+
+.allow-scroll .nav__scrollMessage {
+  opacity: 1;
+  transition: opacity 0.5s 1s linear;
 }
